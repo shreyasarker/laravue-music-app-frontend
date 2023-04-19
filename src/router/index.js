@@ -7,6 +7,7 @@ import ProfileSection from '../views/account/ProfileSection.vue';
 import EditProfile from '../views/account/EditProfile.vue';
 import AddSong from '../views/account/AddSong.vue';
 import DeleteSong from '../views/account/DeleteSong.vue';
+import AddVideo from '../views/account/AddVideo.vue';
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
       path: 'profile/delete-song',
       name: 'account.profile.delete-song',
       component: DeleteSong
+    },
+    {
+      path: 'profile/add-video',
+      name: 'account.profile.add-video',
+      component: AddVideo
     }
   ]
   }
