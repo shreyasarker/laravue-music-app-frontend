@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue';
 import AccountView from '../views/account/AccountView.vue';
 import ProfileSection from '../views/account/ProfileSection.vue';
 import EditProfile from '../views/account/EditProfile.vue';
+import AddSong from '../views/account/AddSong.vue';
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
       path: 'profile/edit',
       name: 'account.profile.edit',
       component: EditProfile
+    },
+    {
+      path: 'profile/add-song',
+      name: 'account.profile.add-song',
+      component: AddSong
     }
   ]
   }
