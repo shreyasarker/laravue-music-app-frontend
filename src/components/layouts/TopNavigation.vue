@@ -12,19 +12,14 @@
         <div :class="showMenu ? 'flex' : 'hidden'" class="w-full md:block md:w-auto" id="navbar-default">
           <ul class="w-full font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
             <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-white bg-purple-700 md:bg-transparent md:text-purple-400 md:p-0" aria-current="page">Home</a>
+              <router-link :to="{name: 'home'}" class="block py-2 pl-3 pr-4 text-white bg-purple-700 md:bg-transparent md:text-purple-400 md:p-0">
+                Home
+              </router-link>
             </li>
             <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">About</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">Services</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">Pricing</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">Contact</a>
+              <router-link :to="{name: 'account.profile'}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
+                Profile
+              </router-link>
             </li>
           </ul>
         </div>
