@@ -4,7 +4,7 @@
     <div class="bg-purple-700 w-full h-1"></div>
     <div class="flex justify-end my-4">
       <CustomButton btn-text="Add Song" :url="{name: 'account.profile.add-song'}" class="text-white text-sm mr-2"/>
-      <CustomButton btn-text="Delete Song" :url="{}" class="text-white text-sm" />
+      <CustomButton btn-text="Delete Song" :url="{name: 'account.profile.delete-song'}" class="text-white text-sm" />
     </div>
     <div class="pb-4">
       <ProfileSongPlayer />
