@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-0 w-full mb-6 group" v-if="type==='text'">
+  <div class="relative z-0 w-full mb-6 group" v-if="type==='text' || type==='password'">
     <input 
       :name="name"
       :id="name"
