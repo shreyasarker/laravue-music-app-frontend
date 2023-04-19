@@ -11,6 +11,7 @@
     <ProfileInfoSection />
     <ProfileSongSection />
     <ProfileVideoSection />
+    <ProfilePostsSection />
   </section>
 </div>
 </template>
@@ -21,6 +22,7 @@ import ProfileInfoSection from '@/components/partials/profile/ProfileInfoSection
 import ProfileAboutSection from '@/components/partials/profile/ProfileAboutSection.vue';
 import ProfileSongSection from '@/components/partials/profile/ProfileSongSection.vue';
 import ProfileVideoSection from '@/components/partials/profile/ProfileVideoSection.vue';
+import ProfilePostsSection from '@/components/partials/profile/ProfilePostsSection.vue';
 
 </script>
 
