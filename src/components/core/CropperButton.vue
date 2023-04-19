@@ -1,10 +1,12 @@
 <template>
-  <label class="block uppercase tracking-wide text-gray-900 text-xs font-bold">
-    {{ label }}
-  </label>
-  <button @click="emit('showModal', true)" class="inline-block bg-gray-200 hover:bg-gray-300 text-purple-700 no-underline px-2 py-1">
-    {{ btnText }}
-  </button>
+  <div class="mb-6">
+    <label class="block uppercase tracking-wide text-gray-900 text-xs font-bold">
+      {{ label }}
+    </label>
+    <button @click="emit('showModal', true)" type="button" class="inline-block bg-gray-200 hover:bg-gray-300 text-purple-700 no-underline px-2 py-1">
+      {{ btnText }}
+    </button>
+  </div>
 </template>
 
 <script setup>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="w-full p-6 flex justify-center h-screen">
+    <div class="w-full p-6 flex justify-center">
       <div class="w-3/4 bg-black p-8 mb-6">
         <h1 class="mb-6 text-lg text-gray-100 font-thin text-center">
           Edit Profile
@@ -9,19 +9,56 @@
         <Form @submit="handleSubmit" :validation-schema="schema">
           <CustomInput name="name" type="text" label="Name" />
           <CustomInput name="location" type="text" label="Location" />
+          <CropperButton label="Profile Image" btnText="Update Profile Image" @showModal="showModal = true"/>
+          <CroppedImage v-if="image" label="Cropped Image" :image="image" />
           <CustomInput name="description" type="textarea" label="description" />
-          <CropperButton label="Profile Image" btnText="Update Profile Image"/>
           <SubmitButton btnText="Update" :isLoading="false"/>
         </Form>
       </div>
     </div>
   </div>
+  <CropperModal v-if="showModal"
+    :minAspectRatioProp="{width: 16, height: 9}"
+    :maxAspectRatioProp="{width: 16, height: 9}"
+    @croppedImageData="setCroppedImageData"
+    @showModal="showModal = false" />
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { Form } from 'vee-validate';
+import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
 import CropperButton from '@/components/core/CropperButton.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
+import CropperModal from '@/components/core/CropperModal.vue';
+import CroppedImage from '@/components/core/CroppedImage.vue';
+
+const schema = Yup.object().shape({
+  name: Yup.string().required('The name field is required.'),
+  location: Yup.string().required('The location field is required.'),
+  description: Yup.string().required('The description field is required.')
+});
+
+const showModal = ref(false);
+let imageData = null;
+const image = ref(null);
+const isLoading = ref(false);
+
+const setCroppedImageData = (data) => {
+  imageData = data
+  image.value = data.imageUrl
+  console.log(imageData);
+}
+
+function handleSubmit(values) {
+  isLoading.value = true;
+  console.log(values);
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 500);
+  //TODO the IMAGE Validation and SUBMIT
+}
 
 </script>
 
