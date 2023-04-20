@@ -4,13 +4,13 @@ import Csrf from '@/apis/Csrf';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    auth: {
-      name: null,
-      email: null,
-      isLoggedIn: false
-    }
+    auth: {}
   }),
   actions: {
+    setAuthUserData(payload) {
+      this.auth = payload;
+      this.auth.isLoggedIn = true;
+    },
     register(data) {
       return new Promise((resolve, reject) => {
         Csrf();
@@ -27,7 +27,19 @@ export const useAuthStore = defineStore('auth', {
         Csrf();
         Api.post('/login', data)
         .then((response) => {
-          this.auth = {name: response.data.data.name, email: response.data.data.email, isLoggedIn: true};
+          this.setAuthUserData(response.data.data);
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      })
+    },
+    getAuthUser() {
+      return new Promise((resolve, reject) => {
+        Csrf();
+        Api.get('/auth-users')
+        .then((response) => {
+          this.setAuthUserData(response.data.data);
           resolve(response);
         }).catch((error) => {
           reject(error);
