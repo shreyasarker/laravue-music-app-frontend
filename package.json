@@ -13,7 +13,9 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "aplayer": "^1.10.1",
     "autoprefixer": "^10",
+    "axios": "^1.3.6",
     "core-js": "^3.8.3",
+    "pinia": "^2.0.35",
     "postcss": "^8",
     "register-service-worker": "^1.7.2",
     "tailwindcss": "^3",
@@ -21,6 +23,7 @@
     "vue": "^3.2.13",
     "vue-advanced-cropper": "^2.8.8",
     "vue-router": "^4.0.3",
+    "vue3-toastify": "^0.1.7",
     "yup": "^1.1.1"
   },
   "devDependencies": {
