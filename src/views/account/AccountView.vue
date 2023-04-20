@@ -1,9 +1,7 @@
 <template>
   <TopNavigation />
   <div class="account-section bg-gray-950 pb-6">
-    <div class="max-w-4xl mx-auto">
-      <router-view />
-    </div>
+    <router-view />
   </div>
   <BottomFooter />
 </template>
