@@ -21,26 +21,38 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/auth.store.js';
+import { errorToast } from '@/utils/toast.js';
 import CustomInput from '@/components/core/CustomInput.vue';
-import { ref } from 'vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('The name field is required.'),
-  email: Yup.string().email('The email must be a valid email address.').required('The email field is required.'),
-  password: Yup.string().min(6, 'The password must be at least 6 characters.').required('The password field is required.').oneOf([Yup.ref('password_confirmation')], 'The password confirmation does not match.'),
+  email: Yup.string().email('The email field must be a valid email address.').required('The email field is required.'),
+  password: Yup.string().min(6, 'The password field must be at least 6 characters.').required('The password field is required.').oneOf([Yup.ref('password_confirmation')], 'The password confirmation does not match.'),
   password_confirmation: Yup.string().required('The password field is required.')
 });
+const router = useRouter();
+const authStore = useAuthStore();
 const isLoading = ref(false);
 
-function handleSubmit(values) {
+async function handleSubmit(data, {setErrors}) {
   isLoading.value = true;
-  console.log(values);
-  setTimeout(() => {
+  try {
+    await authStore.register(data);
     isLoading.value = false;
-  }, 500);
+    router.push('/');
+  } catch (error) {
+    isLoading.value = false;
+    if(error.response.data.errors) {
+      setErrors(error.response.data.errors);
+    }
+    errorToast(error.response.data.message);
+  }
 }
 
 </script>
