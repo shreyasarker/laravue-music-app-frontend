@@ -3,7 +3,7 @@
     <div class="text-white text-xl mb-2">Posts</div>
     <div class="bg-purple-700 w-full h-1"></div>
     <div class="flex justify-end my-4">
-      <CustomButton btn-text="Create Post" :url="{}" class="text-white text-sm"/>
+      <CustomButton btn-text="Create Post" :url="{name: 'account.profile.add-post'}" class="text-white text-sm"/>
     </div>
     <div class="flex flex-justify-center items-center mb-4">
       <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -16,7 +16,7 @@
           </div>
           <div class="mt-4">
             <div class="flex justify-end">
-              <CustomButton btn-text="Edit Post" :url="{}" class="text-gray-500 text-sm mr-2"/>
+              <CustomButton btn-text="Edit Post" :url="{name: 'account.profile.edit-post'}" class="text-gray-500 text-sm mr-2"/>
               <CustomButton btn-text="Delete Post" :url="{}" class="text-gray-500 text-sm"/>
             </div>
           </div>

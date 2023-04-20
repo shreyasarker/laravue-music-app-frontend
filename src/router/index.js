@@ -9,6 +9,8 @@ import AddSong from '../views/account/AddSong.vue';
 import DeleteSong from '../views/account/DeleteSong.vue';
 import AddVideo from '../views/account/AddVideo.vue';
 import DeleteVideo from '../views/account/DeleteVideo.vue';
+import AddPost from '../views/account/AddPost.vue';
+import EditPost from '../views/account/EditPost.vue';
 
 const routes = [
   {
@@ -60,6 +62,16 @@ const routes = [
       path: 'profile/delete-video',
       name: 'account.profile.delete-video',
       component: DeleteVideo
+    },
+    {
+      path: 'profile/add-post',
+      name: 'account.profile.add-post',
+      component: AddPost
+    },
+    {
+      path: 'profile/edit-post',
+      name: 'account.profile.edit-post',
+      component: EditPost
     }
   ]
   }
