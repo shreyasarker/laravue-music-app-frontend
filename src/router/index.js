@@ -12,6 +12,7 @@ import DeleteVideo from '../views/account/DeleteVideo.vue';
 import AddPost from '../views/account/AddPost.vue';
 import EditPost from '../views/account/EditPost.vue';
 import PostList from '../views/account/PostList.vue';
+import PostById from '../views/account/PostById.vue';
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
       path: 'profile/posts',
       name: 'account.profile.posts',
       component: PostList
+    },
+    {
+      path: 'profile/post-by-id',
+      name: 'account.profile.post-by-id',
+      component: PostById
     }
   ]
   }
