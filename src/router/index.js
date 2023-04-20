@@ -11,6 +11,7 @@ import AddVideo from '../views/account/AddVideo.vue';
 import DeleteVideo from '../views/account/DeleteVideo.vue';
 import AddPost from '../views/account/AddPost.vue';
 import EditPost from '../views/account/EditPost.vue';
+import PostList from '../views/account/PostList.vue';
 
 const routes = [
   {
@@ -72,6 +73,11 @@ const routes = [
       path: 'profile/edit-post',
       name: 'account.profile.edit-post',
       component: EditPost
+    },
+    {
+      path: 'profile/posts',
+      name: 'account.profile.posts',
+      component: PostList
     }
   ]
   }
