@@ -26,6 +26,11 @@
                 Posts
               </router-link>
             </li>
+            <li>
+              <a @click="logout" href="#" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
+                Logout
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -35,9 +40,18 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/auth.store.js';
 
 const showMenu = ref(false);
 const toggleNav = () => (showMenu.value = !showMenu.value);
+const router = useRouter();
+const authStore = useAuthStore();
+
+const logout = async () => {
+  await authStore.logout();
+  router.push({name: 'home'});
+}
 
 </script>
 

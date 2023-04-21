@@ -11,6 +11,9 @@ export const useAuthStore = defineStore('auth', {
       this.auth = payload;
       this.auth.isLoggedIn = true;
     },
+    resetAuthUserData() {
+      this.auth = {};
+    },
     register(data) {
       return new Promise((resolve, reject) => {
         Csrf();
@@ -34,6 +37,18 @@ export const useAuthStore = defineStore('auth', {
         })
       })
     },
+    logout() {
+      return new Promise((resolve, reject) => {
+        Csrf();
+        Api.post('/logout')
+        .then((response) => {
+          this.resetAuthUserData();
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      })
+    },
     getAuthUser() {
       return new Promise((resolve, reject) => {
         Csrf();
@@ -42,6 +57,7 @@ export const useAuthStore = defineStore('auth', {
           this.setAuthUserData(response.data.data);
           resolve(response);
         }).catch((error) => {
+          this.logout();
           reject(error);
         })
       })
