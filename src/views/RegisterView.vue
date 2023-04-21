@@ -45,7 +45,7 @@ async function handleSubmit(data, {setErrors}) {
   try {
     await authStore.register(data);
     isLoading.value = false;
-    router.push('/');
+    router.push('/login');
   } catch (error) {
     isLoading.value = false;
     if(error.response.data.errors) {
