@@ -37,6 +37,8 @@ import SubmitButton from '@/components/core/SubmitButton.vue';
 import CropperModal from '@/components/core/CropperModal.vue';
 import CroppedImage from '@/components/core/CroppedImage.vue';
 import { useAuthStore } from '@/store/auth.store.js';
+import { useUserStore } from '@/store/user.store.js';
+import { successToast, errorToast } from '@/utils/toast';
 
 const schema = Yup.object().shape({
   name: Yup.string('The name must be a string.').required('The name field is required.').max(255, 'The name may not be greater than 255 characters.'),
@@ -46,6 +48,7 @@ const schema = Yup.object().shape({
 });
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 const authUser = computed(() => authStore.auth);
 const showModal = ref(false);
 const imageData = ref(null);
@@ -57,13 +60,19 @@ const setCroppedImageData = (data) => {
   imageUrl.value = data.imageUrl;
 }
 
-function handleSubmit(values) {
+const handleSubmit = async (data, { setErrors }) => {
   isLoading.value = true;
-  console.log(values);
-  setTimeout(() => {
+  try {
+    const response = await userStore.updateUser(data);
     isLoading.value = false;
-  }, 500);
-  //TODO the IMAGE Validation and SUBMIT
+    successToast(response.data.message);
+  } catch (error) {
+    isLoading.value = false;
+    if (error.response.data.errors) {
+      setErrors(error.response.data.errors);
+    }
+    errorToast(error.response.data.message);
+  }
 }
 
 </script>
