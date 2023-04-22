@@ -36,7 +36,7 @@ const schema = Yup.object().shape({
   name: Yup.string('The name must be a string.').required('The name field is required.').max(255, 'The name may not be greater than 255 characters.'),
   email: Yup.string('The email must be a string.').email('The email field must be a valid email address.').required('The email field is required.').max(255, 'The email may not be greater than 255 characters.'),
   location: Yup.string('The location must be a string.').required('The location field is required.').max(255, 'The location may not be greater than 255 characters.'),
-  description: Yup.string('The description must be a string.').required('The description field is required.'),
+  description: Yup.string('The description must be a string.').required('The description field is required.').max(1200, 'The description may not be greater than 1200 characters.'),
   password: Yup.string('The password must be a string.').min(6, 'The password must be at least 6 characters.').required('The password field is required.').oneOf([Yup.ref('password_confirmation')], 'The password confirmation does not match.'),
   password_confirmation: Yup.string().required('The password field is required.')
 });
