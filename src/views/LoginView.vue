@@ -36,7 +36,7 @@ const router = useRouter();
 const authStore = useAuthStore();
 const isLoading = ref(false);
 
-async function handleSubmit(data, {setErrors}) {
+const handleSubmit = async (data, {setErrors}) => {
   isLoading.value = true;
   try {
     await authStore.login(data);
