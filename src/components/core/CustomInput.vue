@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-0 w-full mb-6 group" v-if="type==='text' || type==='password'">
+  <div class="relative z-0 w-full mb-6 group" v-if="type==='text' || type==='password' || type==='hidden'">
     <input 
       :name="name"
       :id="name"
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { defineProps, toRef } from 'vue';
+import { defineProps, toRef, watch } from 'vue';
 import { useField } from 'vee-validate';
 
 const props = defineProps({
@@ -66,8 +66,17 @@ const {
   handleBlur,
   handleChange
 } = useField(name, undefined, {
-  initialValue: props.value,
+  initialValue: props.value
 });
+
+watch (() => props.value, (newModel) => {
+  if (newModel === inputValue.value) {
+    return;
+  }
+
+  inputValue.value = newModel;
+   }
+);
 
 </script>
 
