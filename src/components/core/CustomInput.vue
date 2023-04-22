@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-0 w-full mb-6 group" v-if="type==='text' || type==='password' || type==='hidden'">
+  <div class="relative z-0 w-full mb-6 group" v-if="type==='text' || type==='password'">
     <input 
       :name="name"
       :id="name"
@@ -32,6 +32,17 @@
   <div class="relative z-0 w-full mb-6 group" v-else-if="type==='file'">
     <label class="block uppercase mb-2 text-sm text-gray-400" for="file_input">Upload file</label>
     <input class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none" id="file_input" type="file">
+  </div>
+  <div class="relative z-0 w-full mb-6 group" v-if="type==='hidden'">
+    <input 
+      :name="name"
+      :id="name"
+      :type="type"
+      :value="inputValue"
+      @input="handleChange"
+      @blur="handleBlur"
+      />
+    <span class="text-sm text-red-500" v-if="errorMessage">{{ errorMessage }}</span>
   </div>
 </template>
 
@@ -73,10 +84,8 @@ watch (() => props.value, (newModel) => {
   if (newModel === inputValue.value) {
     return;
   }
-
   inputValue.value = newModel;
-   }
-);
+});
 
 </script>
 
