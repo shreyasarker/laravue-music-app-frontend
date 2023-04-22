@@ -8,12 +8,12 @@
             <div class="w-full h-1 mt-2 bg-purple-700"></div>
           </h1>
           <Form @submit="handleSubmit" :validation-schema="schema">
-            <CustomInput name="name" type="text" label="Name" />
-            <CustomInput name="location" type="text" label="Location" />
+            <CustomInput name="name" type="text" :value="authUser.name" label="Name" />
+            <CustomInput name="location" type="text" :value="authUser.location" label="Location" />
             <CropperButton v-bind="imageData" label="Profile Image" btnText="Update Profile Image" @showModal="showModal = true"/>
-            <CustomInput name="image" type="hidden" :value="imageUrl" v-bind="field" />
+            <CustomInput name="image" type="hidden" :value="imageUrl" label="Image" />
             <CroppedImage v-if="imageUrl" label="Cropped Image" :image="imageUrl" />
-            <CustomInput name="description" type="textarea" label="description" />
+            <CustomInput name="description" type="textarea" :value="authUser.description" label="Description" />
             <SubmitButton btnText="Update" :isLoading="false"/>
           </Form>
         </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
@@ -36,6 +36,7 @@ import CropperButton from '@/components/core/CropperButton.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
 import CropperModal from '@/components/core/CropperModal.vue';
 import CroppedImage from '@/components/core/CroppedImage.vue';
+import { useAuthStore } from '@/store/auth.store.js';
 
 const schema = Yup.object().shape({
   name: Yup.string('The name must be a string.').required('The name field is required.').max(255, 'The name may not be greater than 255 characters.'),
@@ -44,9 +45,11 @@ const schema = Yup.object().shape({
   image: Yup.string()
 });
 
+const authStore = useAuthStore();
+const authUser = computed(() => authStore.auth);
 const showModal = ref(false);
 const imageData = ref(null);
-const imageUrl = ref(null);
+const imageUrl = ref(authUser.value.image);
 const isLoading = ref(false);
 
 const setCroppedImageData = (data) => {
