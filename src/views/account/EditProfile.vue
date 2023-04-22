@@ -10,8 +10,9 @@
           <Form @submit="handleSubmit" :validation-schema="schema">
             <CustomInput name="name" type="text" label="Name" />
             <CustomInput name="location" type="text" label="Location" />
-            <CropperButton label="Profile Image" btnText="Update Profile Image" @showModal="showModal = true"/>
-            <CroppedImage v-if="image" label="Cropped Image" :image="image" />
+            <CropperButton v-bind="imageData" label="Profile Image" btnText="Update Profile Image" @showModal="showModal = true"/>
+            <CustomInput name="image" type="hidden" :value="imageUrl" v-bind="field" />
+            <CroppedImage v-if="imageUrl" label="Cropped Image" :image="imageUrl" />
             <CustomInput name="description" type="textarea" label="description" />
             <SubmitButton btnText="Update" :isLoading="false"/>
           </Form>
@@ -37,20 +38,20 @@ import CropperModal from '@/components/core/CropperModal.vue';
 import CroppedImage from '@/components/core/CroppedImage.vue';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('The name field is required.'),
-  location: Yup.string().required('The location field is required.'),
-  description: Yup.string().required('The description field is required.')
+  name: Yup.string('The name must be a string.').required('The name field is required.').max(255, 'The name may not be greater than 255 characters.'),
+  location: Yup.string('The location must be a string.').required('The location field is required.').max(255, 'The location may not be greater than 255 characters.'),
+  description: Yup.string('The description must be a string.').required('The description field is required.').max(1200, 'The description may not be greater than 1200 characters.'),
+  image: Yup.string()
 });
 
 const showModal = ref(false);
-let imageData = null;
-const image = ref(null);
+const imageData = ref(null);
+const imageUrl = ref(null);
 const isLoading = ref(false);
 
 const setCroppedImageData = (data) => {
-  imageData = data
-  image.value = data.imageUrl
-  console.log(imageData);
+  imageData.value = data;
+  imageUrl.value = data.imageUrl;
 }
 
 function handleSubmit(values) {
