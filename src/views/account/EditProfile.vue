@@ -14,7 +14,7 @@
             <CustomInput name="image" type="hidden" :value="imageUrl" label="Image" />
             <CroppedImage v-if="imageUrl" label="Cropped Image" :image="imageUrl" />
             <CustomInput name="description" type="textarea" :value="authUser.description" label="Description" />
-            <SubmitButton btnText="Update" :isLoading="false"/>
+            <SubmitButton btnText="Update" :isLoading="isLoading"/>
           </Form>
         </div>
       </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
@@ -54,6 +54,10 @@ const showModal = ref(false);
 const imageData = ref(null);
 const imageUrl = ref(authUser.value.image);
 const isLoading = ref(false);
+
+watch (() => authUser.value.image, (newModel) => {
+  imageUrl.value = newModel;
+});
 
 const setCroppedImageData = (data) => {
   imageData.value = data;
