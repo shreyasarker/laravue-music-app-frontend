@@ -28,6 +28,7 @@ export const useSongStore = defineStore('song', {
           }
         }).
         then((response) => {
+          this.getSongs();
           resolve(response);
         }).catch((error) => {
           reject(error);
