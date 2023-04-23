@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import APlayer from 'aplayer';
 import 'aplayer/dist/APlayer.min.css';
 import { useSongStore } from '@/store/song.store.js';
@@ -25,6 +25,10 @@ watch(() => songs.value, (newModel) => {
   if(newModel) {
     callThePlayer();
   }
+});
+
+onMounted(() => {
+  callThePlayer();
 });
 
 </script>

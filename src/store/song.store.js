@@ -33,6 +33,18 @@ export const useSongStore = defineStore('song', {
           reject(error);
         })
       });
+    },
+    destroySong(songId) {
+      return new Promise((resolve, reject) => {
+        Csrf();
+        Api.delete(`/songs/${songId}`)
+        .then((response) => {
+          this.getSongs();
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      });
     }
   }
 });

@@ -13,7 +13,7 @@
                 <font-awesome-icon icon="music" /> {{ song.name }}
               </div>
               <div class="w-1/4 ml-auto p-1">
-                <button type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
+                <button @click="handleClick(song.id)" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
                   Delete
                 </button>
               </div>
@@ -23,15 +23,40 @@
       </div>
     </div>
   </div>
+  <ConfirmDialogue v-if="show" title="Delete Song" @confirm="handleDelete" @showConfirmationDialogue="show=!show"/>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useSongStore } from '@/store/song.store.js';
+import ConfirmDialogue from '@/components/core/ConfirmDialogue.vue';
+import { errorToast, successToast } from '@/utils/toast';
 
 const songStore = useSongStore();
+const show = ref(false);
+const songId = ref(null);
 
 const songs = computed(() => songStore.songs);
+
+const handleClick = (value) => {
+  show.value = true;
+  songId.value = value;
+}
+
+const handleDelete = async (value) => {
+  console.log(value);
+  console.log(songId.value);
+  if (value === 'no') {
+    return;
+  }
+  try {
+    const response = await songStore.destroySong(songId.value);
+    successToast(response.data.message);
+  } catch (error) {
+    errorToast(error.response.data.message);
+  }
+}
+
 
 </script>
 
