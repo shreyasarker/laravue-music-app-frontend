@@ -44,7 +44,7 @@ const router = useRouter();
 const songStore = useSongStore();
 const isLoading = ref(false);
 
-async function handleSubmit(data, {setErrors}) {
+const handleSubmit = async (data, {setErrors}) => {
   isLoading.value = true;
   try {
     const response = await songStore.storeSong(data);

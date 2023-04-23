@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { defineProps, toRef, watch } from 'vue';
+import { toRef, watch } from 'vue';
 import { useField } from 'vee-validate';
 
 const props = defineProps({

@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, toRefs } from 'vue';
+import { toRefs } from 'vue';
 
 const props = defineProps({
   btnText: {

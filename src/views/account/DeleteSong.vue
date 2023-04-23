@@ -44,8 +44,6 @@ const handleClick = (value) => {
 }
 
 const handleDelete = async (value) => {
-  console.log(value);
-  console.log(songId.value);
   if (value === 'no') {
     return;
   }

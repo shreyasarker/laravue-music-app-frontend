@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-  import { ref, defineEmits, defineProps, toRefs } from 'vue';
+  import { ref, toRefs } from 'vue';
   import { Cropper } from 'vue-advanced-cropper'
   import 'vue-advanced-cropper/dist/style.css';
 
