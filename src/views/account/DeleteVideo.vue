@@ -8,22 +8,12 @@
             <div class="w-full h-1 mt-2 bg-purple-700"></div>
           </h1>
           <div class="px-8 pt-6 pb-8">
-            <div class="flex flex-wrap">
-              <div class="w-1/4 mr-auto mt-2 text-lg text-white">
-                1. Video
+            <div v-for="(video, index) in videos" :key="index" class="flex flex-wrap">
+              <div class="mr-auto mt-2 text-lg text-white">
+                <font-awesome-icon icon="video" /> {{ video.title }}
               </div>
               <div class="w-1/4 ml-auto p-1">
-                <button type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div class="flex flex-wrap">
-              <div class="w-1/4 mr-auto mt-2 text-lg text-white">
-                2. Video
-              </div>
-              <div class="w-1/4 ml-auto p-1">
-                <button type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
+                <button @click="handleClick(video.id)" type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
                   Delete
                 </button>
               </div>
@@ -33,9 +23,38 @@
       </div>
     </div>
   </div>
+  <ConfirmDialogue v-if="show" title="Delete Video" @confirm="handleDelete" @showConfirmationDialogue="show=!show"/>
 </template>
 
 <script setup>
+import { computed, ref } from 'vue';
+import { useVideoStore } from '@/store/video.store.js';
+import ConfirmDialogue from '@/components/core/ConfirmDialogue.vue';
+import { errorToast, successToast } from '@/utils/toast';
+
+const videoStore = useVideoStore();
+const show = ref(false);
+const videoId = ref(null);
+
+const videos = computed(() => videoStore.videos);
+
+const handleClick = (value) => {
+  show.value = true;
+  videoId.value = value;
+}
+
+const handleDelete = async (value) => {
+  if (value === 'no') {
+    return;
+  }
+  try {
+    const response = await videoStore.destroySong(videoId.value);
+    successToast(response.data.message);
+  } catch (error) {
+    errorToast(error.response.data.message);
+  }
+}
+
 </script>
 
 <style>

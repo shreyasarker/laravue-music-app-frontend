@@ -9,8 +9,8 @@
           </h1>
           <Form @submit="handleSubmit" :validation-schema="schema">
             <CustomInput name="title" type="text" label="Title" />
-            <CustomInput name="source" type="text" label="Embedded Source" />
-            <SubmitButton btnText="Add" :isLoading="false"/>
+            <CustomInput name="url" type="text" label="Embedded URL" />
+            <SubmitButton btnText="Add" :isLoading="isLoading"/>
           </Form>
         </div>
       </div>
@@ -20,24 +20,37 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
+import { useVideoStore } from '@/store/video.store.js'; 
+import { errorToast, successToast } from '@/utils/toast';
 
 const schema = Yup.object().shape({
-  title: Yup.string().required('The title field is required.'),
-  source: Yup.string().required('The source field is required.')
+  title: Yup.string('The title must be a string.').required('The title field is required.').max(255, 'The title may not be greater than 255 characters.'),
+  url: Yup.string('The url must be a string.').required('The url field is required.').max(1200, 'The url may not be greater than 255 characters.')
 });
 
+const router = useRouter();
+const videoStore = useVideoStore();
 const isLoading = ref(false);
 
-function handleSubmit(values) {
+const handleSubmit = async (data, {setErrors}) => {
   isLoading.value = true;
-  console.log(values);
-  setTimeout(() => {
+  try {
+    const response = await videoStore.storeVideo(data);
     isLoading.value = false;
-  }, 500);
+    successToast(response.data.message);
+    router.push({name: 'account.profile'});
+  } catch (error) {
+    isLoading.value = false;
+    if (error.response.data.errors) {
+      setErrors(error.response.data.errors);
+    }
+    errorToast(error.response.data.message);
+  }
 }
 
 </script>
