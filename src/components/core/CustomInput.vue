@@ -30,8 +30,15 @@
     <span class="text-sm text-red-500" v-if="errorMessage">{{ errorMessage }}</span>
   </div>
   <div class="relative z-0 w-full mb-6 group" v-else-if="type==='file'">
-    <label class="block uppercase mb-2 text-sm text-gray-400" for="file_input">Upload file</label>
-    <input class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none" id="file_input" type="file">
+    <label class="block uppercase mb-2 text-sm text-gray-400" :for="name">{{ label }}</label>
+    <input
+      :name="name"
+      :id="name"
+      :type="type"
+      @change="handleChange"
+      @blur="handleBlur" 
+      class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none">
+    <span class="text-sm text-red-500" v-if="errorMessage">{{ errorMessage }}</span>
   </div>
   <div class="relative z-0 w-full mb-6 group" v-if="type==='hidden'">
     <input 

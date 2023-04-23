@@ -9,8 +9,8 @@
           </h1>
           <Form @submit="handleSubmit" :validation-schema="schema">
             <CustomInput name="title" type="text" label="Title" />
-            <CustomInput name="location" type="file" label="Location" />
-            <SubmitButton btnText="Add" :isLoading="false"/>
+            <CustomInput name="song" type="file" label="Song" />
+            <SubmitButton btnText="Add" :isLoading="isLoading"/>
           </Form>
         </div>
       </div>
@@ -20,25 +20,44 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
+import { useSongStore } from '@/store/song.store.js';
+import { errorToast, successToast } from '@/utils/toast';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('The name field is required.'),
-  location: Yup.string().required('The location field is required.'),
-  description: Yup.string().required('The description field is required.')
+  title: Yup.string('The title must be a string.').required('The title field is required.').max(255, 'The title may not be greater than 255 characters.'),
+  song: Yup.mixed().required('The song field is required.')
+  .test("type", "The song field must be a file of type: mp3.", (value) => {
+    if ( value ) {
+      return (value.type === "audio/mpeg");
+    } else {
+      return true;
+    }
+  })
 });
 
+const router = useRouter();
+const songStore = useSongStore();
 const isLoading = ref(false);
 
-function handleSubmit(values) {
+async function handleSubmit(data, {setErrors}) {
   isLoading.value = true;
-  console.log(values);
-  setTimeout(() => {
+  try {
+    const response = await songStore.storeSong(data);
     isLoading.value = false;
-  }, 500);
+    successToast(response.data.message);
+    router.push({name: 'account.profile'});
+  } catch (error) {
+    isLoading.value = false;
+    if (error.response.data.errors) {
+      setErrors(error.response.data.errors);
+    }
+    errorToast(error.response.data.message);
+  }
 }
 
 </script>
