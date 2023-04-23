@@ -8,19 +8,9 @@
             <div class="w-full h-1 mt-2 bg-purple-700"></div>
           </h1>
           <div class="px-8 pt-6 pb-8">
-            <div class="flex flex-wrap">
-              <div class="w-1/4 mr-auto mt-2 text-lg text-white">
-                1. Song
-              </div>
-              <div class="w-1/4 ml-auto p-1">
-                <button type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div class="flex flex-wrap">
-              <div class="w-1/4 mr-auto mt-2 text-lg text-white">
-                2. Song
+            <div v-for="(song, index) in songs" :key="index" class="flex flex-wrap">
+              <div class="mr-auto mt-2 text-lg text-white">
+                <font-awesome-icon icon="music" /> {{ song.name }}
               </div>
               <div class="w-1/4 ml-auto p-1">
                 <button type="button" class="float-right bg-transparent hover:bg-red-600 text-red-600 font-semibold hover:text-white py-2 px-4 border border-red-600 hover:border-transparent rounded">
@@ -36,6 +26,13 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { useSongStore } from '@/store/song.store.js';
+
+const songStore = useSongStore();
+
+const songs = computed(() => songStore.songs);
+
 </script>
 
 <style>

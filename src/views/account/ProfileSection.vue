@@ -19,20 +19,12 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import CustomButton from '@/components/core/CustomButton.vue';
 import ProfileInfoSection from '@/components/partials/profile/ProfileInfoSection.vue';
 import ProfileAboutSection from '@/components/partials/profile/ProfileAboutSection.vue';
 import ProfileSongSection from '@/components/partials/profile/ProfileSongSection.vue';
 import ProfileVideoSection from '@/components/partials/profile/ProfileVideoSection.vue';
 import ProfilePostsSection from '@/components/partials/profile/ProfilePostsSection.vue';
-import { useSongStore } from '@/store/song.store.js';
-
-const songStore = useSongStore();
-
-onMounted(() => {
-  songStore.getSongs();
-});
 
 </script>
 

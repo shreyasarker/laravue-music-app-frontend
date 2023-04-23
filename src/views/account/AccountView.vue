@@ -7,8 +7,16 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import TopNavigation from '@/components/layouts/TopNavigation.vue';
 import BottomFooter from '@/components/layouts/BottomFooter.vue';
+import { useSongStore } from '@/store/song.store.js';
+
+const songStore = useSongStore();
+
+onMounted(() => {
+  songStore.getSongs();
+});
 
 </script>
 
