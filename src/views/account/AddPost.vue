@@ -10,10 +10,11 @@
           <Form @submit="handleSubmit" :validation-schema="schema">
             <CustomInput name="title" type="text" label="Title" />
             <CustomInput name="location" type="text" label="Location" />
-            <CropperButton label="Post Image" btnText="Add Post Image" @showModal="showModal = true"/>
-            <CroppedImage v-if="image" label="Cropped Image" :image="image" />
-            <CustomInput name="description" type="textarea" label="description" />
-            <SubmitButton btnText="Create Post" :isLoading="false"/>
+            <CropperButton v-bind="imageData" label="Post Image" btnText="Add Post Image" @showModal="showModal = true"/>
+            <CustomInput name="image" type="hidden" :value="imageUrl" label="Image" />
+            <CroppedImage v-if="imageUrl" label="Cropped Image" :image="imageUrl" />
+            <CustomInput name="description" type="textarea" label="Description" />
+            <SubmitButton btnText="Create Post" :isLoading="isLoading"/>
           </Form>
         </div>
       </div>
@@ -28,6 +29,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
@@ -35,31 +37,43 @@ import CropperButton from '@/components/core/CropperButton.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
 import CropperModal from '@/components/core/CropperModal.vue';
 import CroppedImage from '@/components/core/CroppedImage.vue';
+import { usePostStore } from '@/store/post.store.js';
+import { successToast, errorToast } from '@/utils/toast';
 
 const schema = Yup.object().shape({
-  title: Yup.string().required('The name field is required.'),
-  location: Yup.string().required('The location field is required.'),
-  description: Yup.string().required('The description field is required.')
+  title: Yup.string('The title must be a string.').required('The title field is required.').max(255, 'The title may not be greater than 255 characters.'),
+  location: Yup.string('The location must be a string.').required('The location field is required.').max(255, 'The location may not be greater than 255 characters.'),
+  description: Yup.string('The description must be a string.').required('The description field is required.').max(2000, 'The description may not be greater than 2000 characters.'),
+  image: Yup.string()
 });
 
+const router = useRouter();
+const postStore = usePostStore();
 const showModal = ref(false);
-let imageData = null;
-const image = ref(null);
+let imageData = ref(null);
+const imageUrl = ref(null);
 const isLoading = ref(false);
 
 const setCroppedImageData = (data) => {
-  imageData = data
-  image.value = data.imageUrl
-  console.log(imageData);
+  imageData.value = data
+  imageUrl.value = data.imageUrl
 }
 
-function handleSubmit(values) {
+const handleSubmit = async (data, { setErrors }) => {
   isLoading.value = true;
-  console.log(values);
-  setTimeout(() => {
+  try {
+    const response = await postStore.storePost(data);
     isLoading.value = false;
-  }, 500);
-  //TODO the IMAGE Validation and SUBMIT
+    successToast(response.data.message);
+    router.push({name: 'account.profile'});
+  } catch (error) {
+    console.log(error);
+    isLoading.value = false;
+    if (error.response.data.errors) {
+      setErrors(error.response.data.errors);
+    }
+    errorToast(error.response.data.message);
+  }
 }
 
 </script>

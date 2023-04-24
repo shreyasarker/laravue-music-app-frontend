@@ -71,7 +71,7 @@ const routes = [
       component: AddPost
     },
     {
-      path: 'profile/edit-post',
+      path: 'profile/edit-post/:id',
       name: 'account.profile.edit-post',
       component: EditPost
     },
@@ -81,7 +81,7 @@ const routes = [
       component: PostList
     },
     {
-      path: 'profile/post-by-id',
+      path: 'profile/post/:id',
       name: 'account.profile.post-by-id',
       component: PostById
     }
