@@ -45,12 +45,12 @@ export const usePostStore = defineStore('post', {
         })
       });
     },
-    storePost(data) {
+    storePost(data, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.post('/posts', data)
         .then((response) => {
-          this.getPostsByUserId();
+          this.getPostsByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);

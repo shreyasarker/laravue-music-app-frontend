@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
@@ -37,6 +37,7 @@ import CropperButton from '@/components/core/CropperButton.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
 import CropperModal from '@/components/core/CropperModal.vue';
 import CroppedImage from '@/components/core/CroppedImage.vue';
+import { useAuthStore } from '@/store/auth.store.js';
 import { usePostStore } from '@/store/post.store.js';
 import { successToast, errorToast } from '@/utils/toast';
 
@@ -48,7 +49,10 @@ const schema = Yup.object().shape({
 });
 
 const router = useRouter();
+const authStore = useAuthStore();
 const postStore = usePostStore();
+
+const authUser = computed(() => authStore.auth);
 const showModal = ref(false);
 let imageData = ref(null);
 const imageUrl = ref(null);
@@ -62,10 +66,10 @@ const setCroppedImageData = (data) => {
 const handleSubmit = async (data, { setErrors }) => {
   isLoading.value = true;
   try {
-    const response = await postStore.storePost(data);
+    const response = await postStore.storePost(data, authUser.value.id);
     isLoading.value = false;
     successToast(response.data.message);
-    router.push({name: 'account.profile'});
+    router.push({name: 'account.profile', params: {id: authUser.value.id}});
   } catch (error) {
     console.log(error);
     isLoading.value = false;
