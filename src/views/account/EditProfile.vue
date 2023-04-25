@@ -20,8 +20,8 @@
       </div>
     </div>
     <CropperModal v-if="showModal"
-      :minAspectRatioProp="{width: 16, height: 9}"
-      :maxAspectRatioProp="{width: 16, height: 9}"
+      :minAspectRatioProp="{width: 9, height: 16}"
+      :maxAspectRatioProp="{width: 9, height: 16}"
       @croppedImageData="setCroppedImageData"
       @showModal="showModal = false" />
   </div>
