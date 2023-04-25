@@ -57,7 +57,7 @@ export const usePostStore = defineStore('post', {
         })
       });
     },
-    updatePost(data, id) {
+    updatePost(data, id, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.post(`/posts/${id}`, data, {
@@ -66,7 +66,7 @@ export const usePostStore = defineStore('post', {
           }
         }).
         then((response) => {
-          this.getPostsByUserId();
+          this.getPostsByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);
