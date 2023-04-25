@@ -4,17 +4,17 @@ import Csrf from '@/apis/Csrf';
 
 export const usePostStore = defineStore('post', {
   state: () => ({
-    posts: [],
+    posts: {},
     post: {},
     userPosts : []
   }),
   actions: {
-    getAllPosts() {
+    getAllPosts(page) {
       return new Promise((resolve, reject) => {
         Csrf();
-        Api.get('/posts')
+        Api.get(`/posts?page=${page}`)
         .then((response) => {
-          this.posts = response.data.data;
+          this.posts = response.data;
           resolve(response);
         }).catch((error) => {
           reject(error);

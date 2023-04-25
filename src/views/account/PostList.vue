@@ -7,7 +7,7 @@
           <div class="w-full h-1 mt-2 bg-purple-700"></div>
         </h1>
         <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
-          <div v-for="(post, index) in posts" :key="index">
+          <div v-for="(post, index) in posts.data" :key="index">
             <div class="relative">
               <img v-if="post.image" :src="post.image" class="object-cover object-center w-full h-64 rounded-lg lg:h-80" alt="post image">
               <div class="absolute bottom-0 flex p-3 bg-gray-900 ">
@@ -25,6 +25,14 @@
           </div>
         </div>
       </div>
+      <div class="flex justify-center">
+        <TailwindPagination
+          :item-classes="['bg-black', 'text-white', 'border-white', 'hover:bg-purple-700']"
+          :active-classes="['bg-purple-700', 'border-white', 'text-white']"
+          :data="posts"
+          @pagination-change-page="getPosts"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -32,12 +40,16 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { usePostStore } from '@/store/post.store.js';
+import { TailwindPagination } from 'laravel-vue-pagination';
 
 const postStore = usePostStore();
 const posts = computed(() => postStore.posts);
-console.log(posts.value)
-onMounted(async () => {
-  await postStore.getAllPosts();
+
+const getPosts = async (page = 1) => {
+  await postStore.getAllPosts(page);
+}
+onMounted(() => {
+  getPosts();
 });
 
 </script>
