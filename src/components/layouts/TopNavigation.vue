@@ -16,11 +16,11 @@
                 Home
               </router-link>
             </li>
-            <!-- <li>
-              <router-link :to="{name: 'account.profile'}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
+            <li v-if="authUser.id">
+              <router-link :to="{name: 'account.profile', params: {id: authUser.id}}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
                 Profile
               </router-link>
-            </li> -->
+            </li>
             <li>
               <router-link :to="{name: 'account.profile.posts'}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
                 Posts
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth.store.js';
 
@@ -47,6 +47,8 @@ const showMenu = ref(false);
 const toggleNav = () => (showMenu.value = !showMenu.value);
 const router = useRouter();
 const authStore = useAuthStore();
+
+const authUser = computed(() => authStore.auth);
 
 const logout = async () => {
   await authStore.logout();
