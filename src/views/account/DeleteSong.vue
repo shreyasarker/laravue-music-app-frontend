@@ -28,14 +28,17 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useSongStore } from '@/store/song.store.js';
 import ConfirmDialogue from '@/components/core/ConfirmDialogue.vue';
+import { useAuthStore } from '@/store/auth.store.js';
+import { useSongStore } from '@/store/song.store.js';
 import { errorToast, successToast } from '@/utils/toast';
 
+const authStore = useAuthStore();
 const songStore = useSongStore();
 const show = ref(false);
 const songId = ref(null);
 
+const authUser = computed(() => authStore.auth);
 const songs = computed(() => songStore.songs);
 
 const handleClick = (value) => {
@@ -48,7 +51,7 @@ const handleDelete = async (value) => {
     return;
   }
   try {
-    const response = await songStore.destroySong(songId.value);
+    const response = await songStore.destroySong(songId.value, authUser.value.id);
     successToast(response.data.message);
   } catch (error) {
     errorToast(error.response.data.message);

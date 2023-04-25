@@ -19,12 +19,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import CustomInput from '@/components/core/CustomInput.vue';
 import SubmitButton from '@/components/core/SubmitButton.vue';
+import { useAuthStore } from '@/store/auth.store.js';
 import { useSongStore } from '@/store/song.store.js';
 import { errorToast, successToast } from '@/utils/toast';
 
@@ -41,16 +42,19 @@ const schema = Yup.object().shape({
 });
 
 const router = useRouter();
+const authStore = useAuthStore();
 const songStore = useSongStore();
+
+const authUser = computed(() => authStore.auth);
 const isLoading = ref(false);
 
 const handleSubmit = async (data, {setErrors}) => {
   isLoading.value = true;
   try {
-    const response = await songStore.storeSong(data);
+    const response = await songStore.storeSong(data, authUser.value.id);
     isLoading.value = false;
     successToast(response.data.message);
-    router.push({name: 'account.profile'});
+    router.push({name: 'account.profile', params: {id: authUser.value.id}});
   } catch (error) {
     isLoading.value = false;
     if (error.response.data.errors) {

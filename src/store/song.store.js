@@ -19,19 +19,7 @@ export const useSongStore = defineStore('song', {
         })
       });
     },
-    getSongs() {
-      return new Promise((resolve, reject) => {
-        Csrf();
-        Api.get('/songs')
-        .then((response) => {
-          this.songs = response.data.data;
-          resolve(response);
-        }).catch((error) => {
-          reject(error);
-        })
-      });
-    },
-    storeSong(data) {
+    storeSong(data, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.post('/songs', data, {
@@ -40,19 +28,19 @@ export const useSongStore = defineStore('song', {
           }
         }).
         then((response) => {
-          this.getSongs();
+          this.getSongsByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);
         })
       });
     },
-    destroySong(songId) {
+    destroySong(songId, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.delete(`/songs/${songId}`)
         .then((response) => {
-          this.getSongs();
+          this.getSongsByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);
