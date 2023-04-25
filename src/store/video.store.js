@@ -19,36 +19,24 @@ export const useVideoStore = defineStore('video', {
         })
       });
     },
-    getVideos() {
-      return new Promise((resolve, reject) => {
-        Csrf();
-        Api.get('/videos')
-        .then((response) => {
-          this.videos = response.data.data;
-          resolve(response);
-        }).catch((error) => {
-          reject(error);
-        })
-      });
-    },
-    storeVideo(data) {
+    storeVideo(data, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.post('/videos', data)
         .then((response) => {
-          this.getVideos();
+          this.getVideosByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);
         })
       });
     },
-    destroySong(songId) {
+    destroySong(songId, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.delete(`/videos/${songId}`)
         .then((response) => {
-          this.getVideos();
+          this.getVideosByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);

@@ -28,11 +28,15 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useVideoStore } from '@/store/video.store.js';
 import ConfirmDialogue from '@/components/core/ConfirmDialogue.vue';
+import { useAuthStore } from '@/store/auth.store.js';
+import { useVideoStore } from '@/store/video.store.js';
 import { errorToast, successToast } from '@/utils/toast';
 
+const authStore = useAuthStore();
 const videoStore = useVideoStore();
+
+const authUser = computed(() => authStore.auth);
 const show = ref(false);
 const videoId = ref(null);
 
@@ -48,7 +52,7 @@ const handleDelete = async (value) => {
     return;
   }
   try {
-    const response = await videoStore.destroySong(videoId.value);
+    const response = await videoStore.destroySong(videoId.value, authUser.value.id);
     successToast(response.data.message);
   } catch (error) {
     errorToast(error.response.data.message);
