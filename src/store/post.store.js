@@ -73,12 +73,12 @@ export const usePostStore = defineStore('post', {
         })
       });
     },
-    destroyPost(postId) {
+    destroyPost(postId, userId) {
       return new Promise((resolve, reject) => {
         Csrf();
         Api.delete(`/posts/${postId}`)
         .then((response) => {
-          this.getPostsByUserId();
+          this.getPostsByUserId(userId);
           resolve(response);
         }).catch((error) => {
           reject(error);

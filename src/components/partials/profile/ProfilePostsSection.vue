@@ -66,7 +66,7 @@ const handleDelete = async (value) => {
     return;
   }
   try {
-    const response = await postStore.destroyPost(postId.value);
+    const response = await postStore.destroyPost(postId.value, authUser.value.id);
     successToast(response.data.message);
   } catch (error) {
     errorToast(error.response.data.message);
