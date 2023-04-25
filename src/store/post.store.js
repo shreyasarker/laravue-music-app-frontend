@@ -5,7 +5,8 @@ import Csrf from '@/apis/Csrf';
 export const usePostStore = defineStore('post', {
   state: () => ({
     posts: {},
-    post: {}
+    post: {},
+    userPosts: []
   }),
   actions: {
     getAllPosts(page) {

@@ -16,7 +16,7 @@
             <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ post.description_excerpt }}</p>
           </div>
           <div class="mt-4">
-            <div class="flex justify-end">
+            <div v-if="isAuthorize" class="flex justify-end">
               <CustomButton btn-text="Edit Post" :url="{name: 'account.profile.edit-post', params: {id: post.id}}" class="text-gray-500 text-sm mr-2"/>
               <CustomButton @click="handleClick(post.id)" btn-text="Delete Post" :url="{}" class="text-gray-500 text-sm"/>
             </div>

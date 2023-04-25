@@ -13,7 +13,7 @@ const props = defineProps({
     required: true
   },
   url: {
-    required: true
+    required: false
   }
 });
 
