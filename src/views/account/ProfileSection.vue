@@ -9,7 +9,6 @@
           </h1>
           <ProfileAboutSection />
         </div>
-        <ProfileInfoSection />
         <ProfileSongSection />
         <ProfileVideoSection />
         <ProfilePostsSection />
@@ -20,7 +19,6 @@
 
 <script setup>
 import CustomButton from '@/components/core/CustomButton.vue';
-import ProfileInfoSection from '@/components/partials/profile/ProfileInfoSection.vue';
 import ProfileAboutSection from '@/components/partials/profile/ProfileAboutSection.vue';
 import ProfileSongSection from '@/components/partials/profile/ProfileSongSection.vue';
 import ProfileVideoSection from '@/components/partials/profile/ProfileVideoSection.vue';
