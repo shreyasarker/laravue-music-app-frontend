@@ -10,13 +10,15 @@
           <div v-for="(post, index) in posts.data" :key="index">
             <div class="relative">
               <img v-if="post.image" :src="post.image" class="object-cover object-center w-full h-64 rounded-lg lg:h-80" alt="post image">
-              <div class="absolute bottom-0 flex p-3 bg-gray-900 ">
-                <img v-if="post.author_image" :src="post.author_image" class="object-cover object-center w-10 h-10 rounded-full" alt="author image">
-                <div class="mx-4">
-                  <h1 class="text-sm text-gray-200">{{ post.author }}</h1>
-                  <p class="text-sm text-gray-400">{{ post.location }}</p>
+              <router-link :to="{name: 'account.profile', params: {id: post.author_id}}" class="hover:text-white">
+                <div class="absolute bottom-0 flex p-3 bg-gray-900 ">
+                  <img v-if="post.author_image" :src="post.author_image" class="object-cover object-center w-10 h-10 rounded-full" alt="author image">
+                  <div class="mx-4">
+                    <h1 class="text-sm text-gray-200">{{ post.author_name }}</h1>
+                    <p class="text-sm text-gray-400">{{ post.location }}</p>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
             <h1 class="mt-6 text-xl font-semibold text-white">{{ post.title }}</h1>
             <hr class="w-32 my-6 text-purple-500">
