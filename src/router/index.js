@@ -13,6 +13,7 @@ import AddPost from '../views/account/AddPost.vue';
 import EditPost from '../views/account/EditPost.vue';
 import PostList from '../views/account/PostList.vue';
 import PostById from '../views/account/PostById.vue';
+import { useAuthStore } from '@/store/auth.store.js';
 
 const routes = [
   {
@@ -23,12 +24,18 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: RegisterView
+    component: RegisterView,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path: '/account',
@@ -43,37 +50,58 @@ const routes = [
     {
       path: 'profile/edit',
       name: 'account.profile.edit',
-      component: EditProfile
+      component: EditProfile,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/add-song',
       name: 'account.profile.add-song',
-      component: AddSong
+      component: AddSong,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/delete-song',
       name: 'account.profile.delete-song',
-      component: DeleteSong
+      component: DeleteSong,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/add-video',
       name: 'account.profile.add-video',
-      component: AddVideo
+      component: AddVideo,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/delete-video',
       name: 'account.profile.delete-video',
-      component: DeleteVideo
+      component: DeleteVideo,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/add-post',
       name: 'account.profile.add-post',
-      component: AddPost
+      component: AddPost,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/edit-post/:id',
       name: 'account.profile.edit-post',
-      component: EditPost
+      component: EditPost,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: 'profile/posts',
@@ -93,5 +121,18 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const auth = useAuthStore();
+
+  if(to.meta.requiresAuth && !auth.auth.isLoggedIn) {
+    next({ name: 'login' });
+  } else if(to.meta.requiresGuest && auth.auth.isLoggedIn) {
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+});
+
 
 export default router;
