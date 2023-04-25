@@ -2,10 +2,10 @@
   <div class="w-full py-4">
     <div class="text-white text-xl mb-2">Posts</div>
     <div class="bg-purple-700 w-full h-1"></div>
-    <div class="flex justify-end my-4">
+    <div v-if="isAuthorize" class="flex justify-end my-4">
       <CustomButton btn-text="Create Post" :url="{name: 'account.profile.add-post'}" class="text-white text-sm"/>
     </div>
-    <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
+    <div v-if="posts && posts.length > 0" class="grid grid-cols-1 gap-8 mt-8 md:mt-16 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
       <div v-for="(post, index) in posts" :key="index" class="h-100">
       <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 min-h-full">
         <img v-if="post.image" :src="post.image" class="object-cover w-full h-64" alt="Article">
@@ -25,6 +25,7 @@
       </div>
     </div>
     </div>
+    <div v-else class="text-white semibold">No post</div>
   </div>
   <ConfirmDialogue v-if="show" title="Delete Post" @confirm="handleDelete" @showConfirmationDialogue="show=!show"/>
 </template>
@@ -32,15 +33,28 @@
 <script setup>
 import { computed, ref } from 'vue';
 import CustomButton from '@/components/core/CustomButton.vue';
+import { useAuthStore } from '@/store/auth.store.js';
+import { useProfileStore } from '@/store/profile.store.js';
 import { usePostStore } from '@/store/post.store.js';
 import ConfirmDialogue from '@/components/core/ConfirmDialogue.vue';
 import { errorToast, successToast } from '@/utils/toast';
 
+const authStore = useAuthStore();
+const profileStore = useProfileStore();
 const postStore = usePostStore();
 const show = ref(false);
 const postId = ref(null);
 
+const authUser = computed(() => authStore.auth);
+const user = computed(() => profileStore.user)
 const posts = computed(() => postStore.userPosts);
+
+const isAuthorize = computed(() => {
+  if(authUser.value && authUser.value.id) {
+    return authUser.value.id === user.value.id;
+  }
+  return false;
+});
 
 const handleClick = (value) => {
   show.value = true;

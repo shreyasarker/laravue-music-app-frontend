@@ -21,10 +21,10 @@ export const usePostStore = defineStore('post', {
         })
       });
     },
-    getPostsByUserId() {
+    getPostsByUserId(userId) {
       return new Promise((resolve, reject) => {
         Csrf();
-        Api.get('/posts-by-user-id')
+        Api.get(`/posts/${userId}`)
         .then((response) => {
           this.userPosts = response.data.data;
           resolve(response);
@@ -36,7 +36,7 @@ export const usePostStore = defineStore('post', {
     getPostById(id) {
       return new Promise((resolve, reject) => {
         Csrf();
-        Api.get(`/posts/${id}`)
+        Api.get(`/posts-by-id/${id}`)
         .then((response) => {
           this.post = response.data.data;
           resolve(response);

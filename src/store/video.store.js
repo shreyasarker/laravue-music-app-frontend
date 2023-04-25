@@ -7,6 +7,18 @@ export const useVideoStore = defineStore('video', {
     videos: []
   }),
   actions: {
+    getVideosByUserId(userId) {
+      return new Promise((resolve, reject) => {
+        Csrf();
+        Api.get(`/videos/${userId}`)
+        .then((response) => {
+          this.videos = response.data.data;
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      });
+    },
     getVideos() {
       return new Promise((resolve, reject) => {
         Csrf();

@@ -7,6 +7,18 @@ export const useSongStore = defineStore('song', {
     songs: []
   }),
   actions: {
+    getSongsByUserId(userId) {
+      return new Promise((resolve, reject) => {
+        Csrf();
+        Api.get(`/songs/${userId}`)
+        .then((response) => {
+          this.songs = response.data.data;
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      });
+    },
     getSongs() {
       return new Promise((resolve, reject) => {
         Csrf();

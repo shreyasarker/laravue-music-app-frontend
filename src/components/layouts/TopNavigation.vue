@@ -16,11 +16,11 @@
                 Home
               </router-link>
             </li>
-            <li>
+            <!-- <li>
               <router-link :to="{name: 'account.profile'}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
                 Profile
               </router-link>
-            </li>
+            </li> -->
             <li>
               <router-link :to="{name: 'account.profile.posts'}" class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 hover:text-purple-700 md:hover:bg-transparent md:border-0 md:hover:text-purple-400 md:p-0">
                 Posts
