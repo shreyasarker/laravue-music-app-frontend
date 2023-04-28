@@ -1,12 +1,13 @@
 {
   "name": "laravue-music-app-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "npx http-server ./dist",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -15,8 +16,6 @@
     "aplayer": "^1.10.1",
     "autoprefixer": "^10",
     "axios": "^1.3.6",
-    "core-js": "^3.8.3",
-    "dotenv": "^16.0.3",
     "js-cookie": "^3.0.4",
     "laravel-vue-pagination": "^4.1.0",
     "pinia": "^2.0.35",
@@ -31,17 +30,10 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-pwa": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
+    "@vitejs/plugin-vue": "^4.2.1",
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^8.7.1",
     "sass": "^1.32.7",
-    "sass-loader": "^12.0.0",
-    "vue-cli-plugin-tailwind": "~3.0.0"
+    "vite": "^4.3.3"
   }
 }
