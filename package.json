@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "npx http-server -P http://127.0.0.1:6666 ./dist",
+    "start": "npx http-server -P http://127.0.0.1:${PORT} ./dist",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
