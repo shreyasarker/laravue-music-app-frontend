@@ -41,7 +41,7 @@ const handleSubmit = async (data, {setErrors}) => {
   try {
     const response = await authStore.login(data);
     isLoading.value = false;
-    router.push({name: 'account.profile', params: {id: response.data.data.id}});
+    router.push({name: 'account.profile', params: {id: response.data.user.id}});
   } catch (error) {
     isLoading.value = false;
     if(error.response.data.errors) {

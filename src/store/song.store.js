@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import Api from '@/apis/Api';
-import Csrf from '@/apis/Csrf';
 
 export const useSongStore = defineStore('song', {
   state: () => ({
@@ -9,8 +8,7 @@ export const useSongStore = defineStore('song', {
   actions: {
     getSongsByUserId(userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.get(`/songs/${userId}`)
+        Api().get(`/songs/${userId}`)
         .then((response) => {
           this.songs = response.data.data;
           resolve(response);
@@ -21,8 +19,7 @@ export const useSongStore = defineStore('song', {
     },
     storeSong(data, userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.post('/songs', data, {
+        Api().post('/songs', data, {
           headers: {
             'content-type': 'multipart/form-data'
           }
@@ -37,8 +34,7 @@ export const useSongStore = defineStore('song', {
     },
     destroySong(songId, userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.delete(`/songs/${songId}`)
+        Api().delete(`/songs/${songId}`)
         .then((response) => {
           this.getSongsByUserId(userId);
           resolve(response);

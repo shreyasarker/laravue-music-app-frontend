@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import Api from '@/apis/Api';
-import Csrf from '@/apis/Csrf';
 
 export const useVideoStore = defineStore('video', {
   state: () => ({
@@ -9,8 +8,7 @@ export const useVideoStore = defineStore('video', {
   actions: {
     getVideosByUserId(userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.get(`/videos/${userId}`)
+        Api().get(`/videos/${userId}`)
         .then((response) => {
           this.videos = response.data.data;
           resolve(response);
@@ -21,8 +19,7 @@ export const useVideoStore = defineStore('video', {
     },
     storeVideo(data, userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.post('/videos', data)
+        Api().post('/videos', data)
         .then((response) => {
           this.getVideosByUserId(userId);
           resolve(response);
@@ -33,8 +30,7 @@ export const useVideoStore = defineStore('video', {
     },
     destroySong(songId, userId) {
       return new Promise((resolve, reject) => {
-        Csrf();
-        Api.delete(`/videos/${songId}`)
+        Api().delete(`/videos/${songId}`)
         .then((response) => {
           this.getVideosByUserId(userId);
           resolve(response);
