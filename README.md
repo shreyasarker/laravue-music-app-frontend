@@ -1,7 +1,8 @@
-# LaraVue Music APP API
+# LaraVue Music APP
 A simple music app where people can create their profile, add audio, video and post.
 
 Project Link: [https://laravue-music-app-frontend.vercel.app]
+API project source code: [https://github.com/shreyasarker/laravue-music-app-api]
 
 ## Support
 - Vite
